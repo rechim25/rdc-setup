@@ -5,6 +5,8 @@ import socket
 import time
 import os
 
+DIRNAME = os.path.dirname(__file__)
+
 tunnel_process = None  # Global variable to hold the SSH process
 rdp_process = None
 
@@ -34,7 +36,7 @@ def main():
     signal.signal(signal.SIGINT, terminate_processes)
 
     # Load configuration from YAML file
-    with open('rdc_config.yaml', 'r') as file:
+    with open(os.path.join(DIRNAME, 'rdc_config.yaml'), 'r') as file:
         config = yaml.safe_load(file)
 
     # Display menu
@@ -69,7 +71,7 @@ def main():
     try:
         # Start Remote Desktop Connection
         # rdp_command = ['mstsc', '/v:localhost:13389', f"/user:{selected_host['user']}", f'/pass:{rdp_password}']
-        rdp_command = ['mstsc', f'{os.getcwd()}\\rdc_client_config.rdc', '/v:localhost:13389', "/f"]
+        rdp_command = ['mstsc', os.path.join(DIRNAME, 'rdc_client_config.rdc'), '/v:localhost:13389', "/f"]
         print("Starting RDP connection...\n")
         rdp_process = subprocess.run(rdp_command, shell=False)
     except Exception as e:
