@@ -1,0 +1,6 @@
+hosts:
+  - name:
+    hostname:
+    user:
+    ssh_port:
+    rdp_remote_port:
